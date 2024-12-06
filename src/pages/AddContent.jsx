@@ -1,10 +1,12 @@
 // AddNoteForm.js
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export default function AddNoteForm({ onNoteAdded }) {
+export default function AddNoteForm({ onNoteAdded , onClose}) {
     const titleRef = useRef(null);
     const contentRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleAddNote = async () => {
         const token = localStorage.getItem('token');
@@ -16,10 +18,14 @@ export default function AddNoteForm({ onNoteAdded }) {
             titleRef.current.value = '';
             contentRef.current.value = '';
             onNoteAdded();
+            onClose();
+            // navigate("/dashboard");
         } catch (error) {
             console.error('Error adding note:', error);
         }
+        
     };
+    
 
     return (
         <div className="bg-gray-100 p-4 rounded shadow mt-4">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddNoteForm from './AddContent';
+import EditNoteForm from './Editnote';
 import { Note } from './icon';
 
 export default function Dashboard() {
@@ -10,6 +11,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         fetchNotes();
+        setShowForm(false);
     }, []);
 
     const fetchNotes = async () => {
@@ -43,7 +45,7 @@ export default function Dashboard() {
                     + Add Note
                 </button>
             </div>
-            {showForm && <AddNoteForm onNoteAdded={fetchNotes} />}
+            {showForm && <AddNoteForm onNoteAdded={fetchNotes} onClose={setShowForm(false)} />}
 
 
 
@@ -56,7 +58,7 @@ export default function Dashboard() {
                             <button className="bg-red-500 text-white text-xs py-1 px-2 rounded"onClick={() => handleDeleteNote(note._id)}>Delete</button>
                             <button className='bg-purple-500 text-white text-xs py-1 px-2 rounded' onClick={() => setEditingNote(note)}>Edit</button>
                         </div>
-                        {editingNote && (<EditNoteForm note={editingNote} fetchNotes={fetchNotes}onClose={() => setEditingNote(null)}/>)}
+                        {editingNote && (<EditNoteForm note={editingNote} fetchNotes={fetchNotes} onClose={() => setEditingNote(null)}/>)}
                     </div>
                     ))
                 )}
